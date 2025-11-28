@@ -3,13 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.imepac.clinica.screens.paciente;
+import br.edu.imepac.clinica.daos.PacienteDao;
+import br.edu.imepac.clinica.entidades.Especialidade;
+import br.edu.imepac.clinica.entidades.Paciente;
+import br.edu.imepac.clinica.interfaces.Persistente;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author ypth
  */
 public class AddPaciente extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddPaciente.class.getName());
 
     /**
@@ -56,7 +67,12 @@ public class AddPaciente extends javax.swing.JFrame {
         jButton1.setText("Cadastrar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jToggleButton1.setText("Cancelar");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
+
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+
+        jToggleButton1.setText("Fechar");
+        jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -71,7 +87,7 @@ public class AddPaciente extends javax.swing.JFrame {
                 .addComponent(jToggleButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(115, 115, 115))
+                .addGap(39, 39, 39))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -94,7 +110,7 @@ public class AddPaciente extends javax.swing.JFrame {
                                 .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                                 .addComponent(jTextField4)
                                 .addComponent(jTextField5)))))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +142,62 @@ public class AddPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+         if (!campoObrigatoriosValidos()) {
+            JOptionPane.showMessageDialog(this, "Campos obrigatórios devem ser preenchidos!", "Status da operação", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         
+        int convenio = Integer.parseInt(jTextField5.getText());
+
+        Paciente paciente = new Paciente(jTextField3.getText(), jTextField4.getText(), convenio) ;
+        PacienteDao pacienteDao = new PacienteDao();
+        boolean status = pacienteDao.salvar(paciente);
+        
+        if (status == true) {
+            JOptionPane.showMessageDialog(this, "Paciente cadastrada com sucesso!", "Status da operação", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar o Paciente - contate o administrador!", "Status da operação", JOptionPane.ERROR_MESSAGE);
+        }            
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+            this.dispose();
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+     private boolean campoObrigatoriosValidos() {
+        if (jTextField3.getText().isBlank()) {
+            return false;
+        }
+        if (jTextField4.getText().isBlank()) {
+            return false;
+        }
+        if (jTextField5.getText().isBlank()) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
-     * @param args the command line arguments
+     * @p
+     * aram args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

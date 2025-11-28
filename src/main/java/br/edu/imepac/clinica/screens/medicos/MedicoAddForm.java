@@ -69,6 +69,13 @@ public class MedicoAddForm extends BaseScreen {
         jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel3.setText("Nome");
 
+        nomeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel4.setText("CRM");
 
         salvarBtn.setText("Salvar");
@@ -189,6 +196,10 @@ public class MedicoAddForm extends BaseScreen {
         limparFormmulario();
     }//GEN-LAST:event_LimparBtnActionPerformed
 
+    private void nomeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeFieldActionPerformed
+
     private void limparFormmulario() {
         nomeField.setText("");
         crmField.setText("");
@@ -225,7 +236,7 @@ public class MedicoAddForm extends BaseScreen {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LimparBtn;
     private javax.swing.JTextField crmField;
-    private javax.swing.JComboBox<Especialidade> especialidadesField;
+    private javax.swing.JComboBox<String> especialidadesField;
     private javax.swing.JButton fecharBtn;
     private javax.swing.JLabel imageIcon;
     private javax.swing.JLabel jLabel1;

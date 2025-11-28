@@ -150,7 +150,7 @@ public class MainMenu extends BaseScreen {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
