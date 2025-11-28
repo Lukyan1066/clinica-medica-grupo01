@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class PacienteDao extends BaseDao {
       
     public boolean salvar(Paciente entidade) {
-        String sql = "INSERT INTO paciente (cpf, nome, n_convenio) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO pacientes (nome ,cpf , n_convenio) VALUES (?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -27,8 +27,8 @@ public class PacienteDao extends BaseDao {
             conn = getConnection();
             stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, entidade.getCpf());
-            stmt.setString(2, entidade.getNome());
+            stmt.setString(2, entidade.getCpf());
+            stmt.setString(1, entidade.getNome());
             stmt.setInt(3, entidade.getN_convenio());
 
             int linhas = stmt.executeUpdate();
@@ -46,7 +46,7 @@ public class PacienteDao extends BaseDao {
 
     
     public boolean atualizar (Paciente entidade){
-        String sql = "UPDATE paciente SET nome = ?, n_convenio = ? WHERE cpf = ?";
+        String sql = "UPDATE pacientes SET nome = ?, n_convenio = ? WHERE cpf = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
 

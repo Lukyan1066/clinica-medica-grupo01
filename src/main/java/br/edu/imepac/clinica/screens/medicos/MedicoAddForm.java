@@ -56,7 +56,7 @@ public class MedicoAddForm extends BaseScreen {
         fecharBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        especialidadesField = new javax.swing.JComboBox<Especialidade>();
+        especialidadesField = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,6 +106,11 @@ public class MedicoAddForm extends BaseScreen {
         jLabel5.setText("Especialidade");
 
         especialidadesField.setEditable(true);
+        especialidadesField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                especialidadesFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,6 +205,10 @@ public class MedicoAddForm extends BaseScreen {
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeFieldActionPerformed
 
+    private void especialidadesFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_especialidadesFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_especialidadesFieldActionPerformed
+
     private void limparFormmulario() {
         nomeField.setText("");
         crmField.setText("");
@@ -222,11 +231,11 @@ public class MedicoAddForm extends BaseScreen {
         List<Especialidade> especialidades = this.especialidadeDao.listarTodos();
 
         // Cria o modelo do combo
-        DefaultComboBoxModel<Especialidade> modelo = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
 
         // Percorre a lista e adiciona os nomes das especialidades
         for (Especialidade e : especialidades) {
-            modelo.addElement(e);
+            modelo.addElement(e.getNome());
         }
 
         // Define o modelo no combobox
