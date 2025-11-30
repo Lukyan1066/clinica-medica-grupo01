@@ -9,20 +9,29 @@ package br.edu.imepac.clinica.entidades;
  * @author ypth
  */
 public class Paciente {
-    private String cpf;
     private String nome;
+    private String cpf;
     private int n_convenio;
     
     public Paciente() {
     }
 
-    public Paciente(String cpf, String nome, int n_convenio) {
+    public Paciente(String nome, String cpf, int n_convenio) {
         this.cpf = cpf;
         this.nome = nome;
         this.n_convenio = n_convenio;
     }
 
 
+    
+     public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public String getCpf() {
         return cpf;
     }
@@ -31,13 +40,6 @@ public class Paciente {
         this.cpf = cpf;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public int getN_convenio() {
         return n_convenio;

@@ -26,9 +26,9 @@ public class PacienteDao extends BaseDao {
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(sql);
-
-            stmt.setString(2, entidade.getCpf());
+            
             stmt.setString(1, entidade.getNome());
+            stmt.setString(2, entidade.getCpf());
             stmt.setInt(3, entidade.getN_convenio());
 
             int linhas = stmt.executeUpdate();
