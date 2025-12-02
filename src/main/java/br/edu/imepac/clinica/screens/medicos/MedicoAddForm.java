@@ -183,8 +183,9 @@ public class MedicoAddForm extends BaseScreen {
             JOptionPane.showMessageDialog(this, "Campos obrigatórios devem ser preenchidos!", "Status da operação", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        Medico medico = new Medico(nomeField.getText(), crmField.getText(), ((Especialidade) especialidadesField.getSelectedItem()).getId());
+        
+        Especialidade esp = (Especialidade) especialidadesField.getSelectedItem();
+        Medico medico = new Medico(nomeField.getText(), crmField.getText(), esp.getId());
         MedicoDao medicoDao = new MedicoDao();
         boolean status = medicoDao.salvar(medico);
         
@@ -231,15 +232,17 @@ public class MedicoAddForm extends BaseScreen {
         List<Especialidade> especialidades = this.especialidadeDao.listarTodos();
 
         // Cria o modelo do combo
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<Especialidade> modelo = new DefaultComboBoxModel<>();
 
         // Percorre a lista e adiciona os nomes das especialidades
         for (Especialidade e : especialidades) {
-            modelo.addElement(e.getNome());
+            modelo.addElement(e);
         }
 
         // Define o modelo no combobox
-        especialidadesField.setModel(modelo);
+        especialidadesField.setModel((javax.swing.ComboBoxModel)modelo);
+        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

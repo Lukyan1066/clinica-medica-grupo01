@@ -166,7 +166,7 @@ public class MedicoDao extends BaseDao implements Persistente<Medico> {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao listar medicoss: " + e.getMessage());
+            System.err.println("Erro ao listar medicos: " + e.getMessage());
 
         } finally {
             fecharRecursos(conn, stmt, rs);
