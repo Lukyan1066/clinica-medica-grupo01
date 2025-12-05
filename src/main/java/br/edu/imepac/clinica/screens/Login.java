@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.edu.imepac.clinica.screens.especialidades;
+package br.edu.imepac.clinica.screens;
 
 
 import br.edu.imepac.clinica.screens.MainMenu;

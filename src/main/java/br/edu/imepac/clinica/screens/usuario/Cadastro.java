@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.edu.imepac.clinica.screens.especialidades;
+package br.edu.imepac.clinica.screens.usuario;
 
 import br.edu.imepac.clinica.daos.UsuarioDao;
 import br.edu.imepac.clinica.entidades.Usuario;
 import br.edu.imepac.clinica.exceptions.CampoObrigatorioException;
+import br.edu.imepac.clinica.screens.especialidades.EspecialidadeAddForm;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -43,9 +44,9 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         usuarioField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        senhaField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        senhaField = new javax.swing.JPasswordField();
 
         jLabel3.setText("jLabel3");
 
@@ -63,14 +64,14 @@ public class Cadastro extends javax.swing.JFrame {
 
         jLabel2.setText("Senha:");
 
-        senhaField.addActionListener(this::senhaFieldActionPerformed);
-
         jButton1.setText("Realizar Cadastro");
         jButton1.addActionListener(this::RealizarCadastroActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 0, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 255));
         jLabel4.setText("Cadastro");
+
+        senhaField.setText("jPasswordField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,11 +121,12 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RealizarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarCadastroActionPerformed
+        String senhaString = new String(senhaField.getPassword());
         try {
 
             validarCamposObrigatorios();
 
-            Usuario usuario = new Usuario(usuarioField.getText(), senhaField.getText());
+            Usuario usuario = new Usuario(usuarioField.getText(), senhaString, "a");
             UsuarioDao usuariodao = new UsuarioDao();
             boolean status = usuariodao.salvar(usuario);
 
@@ -141,10 +143,6 @@ public class Cadastro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Campos obrigatórios devem ser preenchidos!", "Status da operação", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_RealizarCadastroActionPerformed
-
-    private void senhaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_senhaFieldActionPerformed
 
      private void validarCamposObrigatorios() throws CampoObrigatorioException {
         List<String> campos = new ArrayList<>();
@@ -198,7 +196,7 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField senhaField;
+    private javax.swing.JPasswordField senhaField;
     private javax.swing.JTextField usuarioField;
     // End of variables declaration//GEN-END:variables
 }
