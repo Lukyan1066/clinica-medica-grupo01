@@ -24,6 +24,28 @@ public class ListPaciente extends javax.swing.JFrame {
         jButton4.setText("Excluir");
         jButton6.setText("Fechar");
     }
+    
+    private void carregarTabelaPacientes() {
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable2.getModel();
+
+    modelo.setRowCount(0); // limpa linhas atuais
+
+    br.edu.imepac.clinica.daos.PacienteDao dao =
+            new br.edu.imepac.clinica.daos.PacienteDao();
+    java.util.List<br.edu.imepac.clinica.entidades.Paciente> pacientes =
+            dao.listarTodos();
+
+    for (br.edu.imepac.clinica.entidades.Paciente p : pacientes) {
+        modelo.addRow(new Object[]{
+            p.getCpf(),          
+            p.getNome(),
+            p.getN_convenio()
+        });
+    }
+
+    jTable2.repaint();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,7 +144,18 @@ public class ListPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-             
+        int linha = jTable2.getSelectedRow();
+    if (linha == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione um paciente.");
+        return;
+    }
+
+    String cpf = jTable2.getValueAt(linha, 2).toString(); // coluna 2 = CPF
+    PacienteUpdate form = new PacienteUpdate(cpf);
+    form.setVisible(true);
+
+    carregarTabelaPacientes(); // depois que fechar o update, recarrega
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

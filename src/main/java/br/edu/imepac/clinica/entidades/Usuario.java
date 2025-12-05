@@ -12,19 +12,23 @@ public class Usuario {
     private long id;
     private String usuario;
     private String senha;
+    private String status;
+    private String cargo;
 
     public Usuario() {
     }
 
-    public Usuario(long id, String usuario, String senha) {
+    public Usuario(long id, String usuario, String senha, String cargo) {
         this.id = id;
         this.usuario = usuario;
         this.senha = senha;
+        this.cargo = cargo;
     }
 
-    public Usuario(String usuario, String senha) {
+    public Usuario(String usuario, String senha, String cargo) {
         this.usuario = usuario;
         this.senha = senha;
+        this.cargo = cargo;
     }
 
     public long getId() {
@@ -49,6 +53,22 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

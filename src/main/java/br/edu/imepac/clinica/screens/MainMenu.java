@@ -4,13 +4,13 @@
  */
 package br.edu.imepac.clinica.screens;
 
-import br.edu.imepac.clinica.screens.especialidades.Cadastro;
+import br.edu.imepac.clinica.screens.usuario.Cadastro;
 import br.edu.imepac.clinica.screens.especialidades.EspecialidadeAddForm;
 import br.edu.imepac.clinica.screens.especialidades.EspecialidadeListForm;
 import br.edu.imepac.clinica.screens.medicos.MedicoAddForm;
 import br.edu.imepac.clinica.screens.medicos.MedicoListForm;
 import br.edu.imepac.clinica.screens.medicos.MedicoUpdateForm;
-import br.edu.imepac.clinica.screens.especialidades.Login;
+import br.edu.imepac.clinica.screens.perfil.Perfil;
 
 /**
  *
@@ -150,7 +150,11 @@ public class MainMenu extends BaseScreen {
         //</editor-fold>
 
         /* Create and display the form */
+<<<<<<< HEAD
         java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));
+=======
+        java.awt.EventQueue.invokeLater(() -> new Perfil().setVisible(true));
+>>>>>>> d6da510eee19d726bd0ca5047389144aa695e96c
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

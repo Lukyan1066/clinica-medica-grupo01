@@ -17,12 +17,14 @@ import java.util.ArrayList;
  * @author ypth
  */
 public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
+    
   
     @Override
     public boolean salvar(Usuario entidade) {
-        String sql = "INSERT INTO usuarios (usuario, senha) VALUES (?, ?)";
+        String sql = "INSERT INTO usuarios (usuario, senha, cargo) VALUES (?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
+        
 
         try {
             conn = getConnection();
@@ -30,6 +32,7 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
 
             stmt.setString(1, entidade.getUsuario());
             stmt.setString(2, entidade.getSenha());
+            stmt.setString(3, entidade.getCargo());
 
             int linhas = stmt.executeUpdate();
             return linhas > 0;
@@ -45,7 +48,7 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
     
     @Override
     public boolean atualizar(Usuario entidade) {
-        String sql = "UPDATE usuarios SET usuario = ?, senha = ? WHERE id = ?";
+        String sql = "UPDATE usuarios SET usuario = ?, senha = ?, cargo = ? WHERE id = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -55,7 +58,8 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
 
             stmt.setString(1, entidade.getUsuario());
             stmt.setString(2, entidade.getSenha());
-            stmt.setLong(3, entidade.getId());
+            stmt.setString(3, entidade.getCargo());
+            stmt.setLong(4, entidade.getId());
 
             int linhas = stmt.executeUpdate();
             return linhas > 0;
@@ -93,6 +97,33 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
         }
     }
     
+    public boolean alterarStatus(long id, Object status) {
+        String sql = "UPDATE usuarios SET status = ? WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        
+        String statusString = status.equals("ativo") ? "inativo" : "ativo";
+
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, statusString);
+            stmt.setLong(2, id);
+
+            int linhas = stmt.executeUpdate();
+            return linhas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao alterar status: " + e.getMessage());
+            return false;
+
+        } finally {
+            fecharRecursos(conn, stmt);
+        }
+    }
+    
     @Override
     public Usuario buscarPorId(long id) {
         String sql = "SELECT id, usuario, senha FROM usuarios WHERE id = ?";
@@ -112,7 +143,8 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
                 usuario = new Usuario();
                 usuario.setId(rs.getLong("id"));
                 usuario.setUsuario(rs.getString("usuario"));
-                usuario.setSenha(rs.getString("senha"));
+                String senhaString = rs.getString("senha");
+                usuario.setSenha(senhaString);
             }
 
         } catch (SQLException e) {
@@ -127,7 +159,7 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
     
     @Override
     public List<Usuario> listarTodos() {
-        String sql = "SELECT id, usuario, senha FROM usuarios";
+        String sql = "SELECT id, usuario, senha, cargo, status FROM usuarios";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -142,7 +174,10 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getLong("id"));
                 usuario.setUsuario(rs.getString("usuario"));
-                usuario.setSenha(rs.getString("senha"));
+                String senhaString = rs.getString("senha");
+                usuario.setSenha(senhaString);
+                usuario.setCargo(rs.getString("cargo"));
+                usuario.setStatus(rs.getString("status"));
                 lista.add(usuario);
             }
 

@@ -97,8 +97,13 @@ public class PacienteUpdate extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel5.setText("Nº convênio");
 
+<<<<<<< HEAD
         jLabel1.setFont(new java.awt.Font("Dubai Medium", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 51));
+=======
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 153));
+>>>>>>> d6da510eee19d726bd0ca5047389144aa695e96c
         jLabel1.setText("Atualizar Paciente");
 
         convenioField.addActionListener(this::convenioFieldActionPerformed);
@@ -128,7 +133,11 @@ public class PacienteUpdate extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addComponent(fecharBtn))
                     .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(116, 116, 116)
+=======
+                        .addGap(114, 114, 114)
+>>>>>>> d6da510eee19d726bd0ca5047389144aa695e96c
                         .addComponent(jLabel1)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -151,7 +160,11 @@ public class PacienteUpdate extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(convenioField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+>>>>>>> d6da510eee19d726bd0ca5047389144aa695e96c
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarBtn)
                     .addComponent(LimparBtn)
