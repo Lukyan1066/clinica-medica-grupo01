@@ -23,5 +23,5 @@
             <version>RELEASE270</version>
         </dependency>
     </dependencies>
-    
+    <name>clinica-desktop-202501-klaivyn</name>
 </project>
