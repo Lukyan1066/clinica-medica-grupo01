@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import  br.edu.imepac.clinica.daos.UsuarioDao;
 import java.sql.SQLException;
-
+import  br.edu.imepac.clinica.entidades.Usuario;
 /**
  *
  * @author ypth
@@ -169,14 +169,14 @@ public class Login extends javax.swing.JFrame {
         return;
     }
     
-    try {
-        
-        if (dao.verificarLogin(usuario, senha)){
+     try {
+        Usuario usuarioLogado = dao.autenticar(usuario, senha);
+        if (usuarioLogado != null) {
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-            // Abrir MainMenu e fechar Login
-            MainMenu mainMenu = new MainMenu();
+
+            MainMenu mainMenu = new MainMenu(usuarioLogado);
             mainMenu.setVisible(true);
-            this.dispose();  // fecha a janela de login
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
         }

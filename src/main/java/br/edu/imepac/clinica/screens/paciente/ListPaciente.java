@@ -4,7 +4,7 @@
  */
 package br.edu.imepac.clinica.screens.paciente;
 
-import br.edu.imepac.clinica.screens.medicos.MedicoUpdateForm;
+import br.edu.imepac.clinica.daos.PacienteDao;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +23,8 @@ public class ListPaciente extends javax.swing.JFrame {
         jButton1.setText("Editar");
         jButton4.setText("Excluir");
         jButton6.setText("Fechar");
+        
+         carregarTabelaPacientes();
     }
     
     private void carregarTabelaPacientes() {
@@ -71,13 +73,13 @@ public class ListPaciente extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Identificador", "Nome", "Cpf", "Nº Convênio"
+                "Cpf", "Nome", "Nº Convênio"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -100,39 +102,34 @@ public class ListPaciente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(14, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(120, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(115, 115, 115))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9)))
+                .addGap(205, 205, 205)
+                .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton4)
@@ -150,16 +147,49 @@ public class ListPaciente extends javax.swing.JFrame {
         return;
     }
 
-    String cpf = jTable2.getValueAt(linha, 2).toString(); // coluna 2 = CPF
+    String cpf = jTable2.getValueAt(linha, 0).toString();
     PacienteUpdate form = new PacienteUpdate(cpf);
     form.setVisible(true);
 
-    carregarTabelaPacientes(); // depois que fechar o update, recarrega
+    carregarTabelaPacientes(); 
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+            int linha = jTable2.getSelectedRow();
+    if (linha == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Selecione um paciente para excluir.",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    
+    String cpf = jTable2.getValueAt(linha, 0).toString();
+
+    int opcao = JOptionPane.showConfirmDialog(this,
+            "Deseja realmente excluir o paciente de CPF " + cpf + "?",
+            "Confirmação",
+            JOptionPane.YES_NO_OPTION);
+
+    if (opcao == JOptionPane.YES_OPTION) {
+        PacienteDao dao = new PacienteDao();
+        boolean sucesso = dao.excluir(cpf);     // usa o DAO
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this,
+                    "Paciente excluído com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            carregarTabelaPacientes();          // atualiza a tabela
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Falha ao excluir o paciente.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

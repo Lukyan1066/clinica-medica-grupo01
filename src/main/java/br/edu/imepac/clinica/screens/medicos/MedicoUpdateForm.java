@@ -54,14 +54,12 @@ public class MedicoUpdateForm extends BaseScreen {
     public void selecionarEspecialidade(long especialidadeSelecionada) {
 
         for (int i = 0; i < especialidadesField.getItemCount(); i++) {
-            Especialidade e = especialidadesField.getItemAt(i);
-
-            // Compara pelo ID
+            Especialidade e = (Especialidade) especialidadesField.getItemAt(i);
             if (e.getId() == especialidadeSelecionada) {
                 especialidadesField.setSelectedIndex(i);
-                break;
-            }
+                    break;
         }
+    }
     }
 
     /**
@@ -137,8 +135,8 @@ public class MedicoUpdateForm extends BaseScreen {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(imageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
+                        .addComponent(imageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
@@ -200,8 +198,8 @@ public class MedicoUpdateForm extends BaseScreen {
             JOptionPane.showMessageDialog(this, "Campos obrigatórios devem ser preenchidos!", "Status da operação", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        Medico medico = new Medico(this.medicoDataForm.getId(), nomeField.getText(), crmField.getText(), ((Especialidade) especialidadesField.getSelectedItem()).getId());
+        Especialidade esp = (Especialidade) especialidadesField.getSelectedItem();
+        Medico medico = new Medico(this.medicoDataForm.getId(), nomeField.getText(), crmField.getText(), esp.getId());
         MedicoDao medicoDao = new MedicoDao();
         boolean status = medicoDao.atualizar(medico);
 
@@ -235,27 +233,26 @@ public class MedicoUpdateForm extends BaseScreen {
         }
         return true;
     }
+    
 
     private void loadEspecialidadesInForm() {
-        EspecialidadeDao especialidadeDao = new EspecialidadeDao();
-        List<Especialidade> especialidades = especialidadeDao.listarTodos();
+    EspecialidadeDao especialidadeDao = new EspecialidadeDao();
+    List<Especialidade> especialidades = especialidadeDao.listarTodos();
 
-        // Cria o modelo do combo
-        DefaultComboBoxModel<Especialidade> modelo = new DefaultComboBoxModel<>();
+    DefaultComboBoxModel<Especialidade> modelo = new DefaultComboBoxModel<>();
 
-        // Percorre a lista e adiciona os nomes das especialidades
-        for (Especialidade e : especialidades) {
-            modelo.addElement(e);
-        }
-
-        // Define o modelo no combobox
-        especialidadesField.setModel(modelo);
+    for (Especialidade e : especialidades) {
+        modelo.addElement(e);
     }
+
+    especialidadesField.setModel(modelo);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LimparBtn;
     private javax.swing.JTextField crmField;
-    private javax.swing.JComboBox<Especialidade> especialidadesField;
+    private javax.swing.JComboBox especialidadesField;
     private javax.swing.JButton fecharBtn;
     private javax.swing.JLabel imageIcon;
     private javax.swing.JLabel jLabel1;

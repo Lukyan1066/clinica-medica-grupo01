@@ -11,7 +11,10 @@ import br.edu.imepac.clinica.screens.medicos.MedicoAddForm;
 import br.edu.imepac.clinica.screens.medicos.MedicoListForm;
 import br.edu.imepac.clinica.screens.medicos.MedicoUpdateForm;
 import br.edu.imepac.clinica.screens.perfil.Perfil;
-
+import br.edu.imepac.clinica.screens.paciente.AddPaciente;
+import br.edu.imepac.clinica.screens.paciente.ListPaciente;
+import br.edu.imepac.clinica.entidades.Usuario;
+import javax.swing.JOptionPane;
 /**
  *
  * @author evertonhf
@@ -28,6 +31,41 @@ public class MainMenu extends BaseScreen {
         ajustarLarguraTela();
         posicionarTopo(0);
     }
+    
+    private Usuario usuarioLogado;
+
+    public MainMenu(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+        initComponents();
+        ajustarLarguraTela();
+        posicionarTopo(0);
+        configurarMenusPorPerfil();
+}
+    
+    private void configurarMenusPorPerfil() {
+    if (usuarioLogado == null) {
+        especialidadeMenu.setEnabled(false);
+        medicoMenu.setEnabled(false);
+        ListarPaciente.setEnabled(false);
+        perfilMenu.setEnabled(false);  // quando tiver
+        return;
+    }
+
+    String cargo = usuarioLogado.getCargo(); // "ADMIN", "USER", etc.
+
+    if ("ADMIN".equalsIgnoreCase(cargo)) {
+        especialidadeMenu.setEnabled(true);
+        medicoMenu.setEnabled(true);
+        ListarPaciente.setEnabled(true);
+        perfilMenu.setEnabled(true);   // manutenção de perfis
+    } else {
+        especialidadeMenu.setEnabled(false);
+        medicoMenu.setEnabled(true);
+        ListarPaciente.setEnabled(true);
+        perfilMenu.setEnabled(false);
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +76,10 @@ public class MainMenu extends BaseScreen {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         especialidadeMenu = new javax.swing.JMenu();
         cadastrarEspecialidade = new javax.swing.JMenuItem();
@@ -45,10 +87,25 @@ public class MainMenu extends BaseScreen {
         medicoMenu = new javax.swing.JMenu();
         cadastrarMedico = new javax.swing.JMenuItem();
         listarMedico = new javax.swing.JMenuItem();
+        ListarPaciente = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        perfilMenu = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        especialidadeMenu.setText("Especialidades");
+        especialidadeMenu.setText("Especialidades  ");
 
         cadastrarEspecialidade.setText("Cadastrar");
         cadastrarEspecialidade.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +145,38 @@ public class MainMenu extends BaseScreen {
 
         jMenuBar1.add(medicoMenu);
 
+        ListarPaciente.setText("Pacientes");
+
+        jMenuItem1.setText("Cadastrar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        ListarPaciente.add(jMenuItem1);
+
+        jMenuItem2.setText("Listar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        ListarPaciente.add(jMenuItem2);
+
+        jMenuBar1.add(ListarPaciente);
+
+        perfilMenu.setText("Perfil");
+
+        jMenuItem6.setText("Manutenção de perfis");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        perfilMenu.add(jMenuItem6);
+
+        jMenuBar1.add(perfilMenu);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,6 +199,13 @@ public class MainMenu extends BaseScreen {
         especialidadeAddForm.setVisible(true);
     }//GEN-LAST:event_cadastrarEspecialidadeActionPerformed
 
+    
+    
+    
+    
+    
+    
+    
     private void listarEspecialidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarEspecialidadeActionPerformed
        EspecialidadeListForm especialidadeListForm = new EspecialidadeListForm();
        especialidadeListForm.pack();
@@ -127,6 +223,56 @@ public class MainMenu extends BaseScreen {
         medicoListForm.pack();
         medicoListForm.setVisible(true);
     }//GEN-LAST:event_listarMedicoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        AddPaciente addPaciente = new AddPaciente();
+        addPaciente.pack();
+        addPaciente.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ListPaciente listPaciente = new ListPaciente();
+        listPaciente.pack();
+        listPaciente.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        if (usuarioLogado == null) {
+        JOptionPane.showMessageDialog(this,
+                "É necessário estar logado para acessar esta área.",
+                "Acesso negado",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Confirmação de senha
+    String senhaDigitada = JOptionPane.showInputDialog(
+            this,
+            "Digite sua senha para acessar manutenção de perfis:",
+            "Confirmação de senha",
+            JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (senhaDigitada == null) {
+        // Cancelou
+        return;
+    }
+
+    if (!senhaDigitada.equals(usuarioLogado.getSenha())) {
+        JOptionPane.showMessageDialog(this,
+                "Senha inválida.",
+                "Acesso negado",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Aqui abre a tela de manutenção de perfis
+    Perfil perfilForm = new Perfil();
+    perfilForm.pack();
+    perfilForm.setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,20 +296,27 @@ public class MainMenu extends BaseScreen {
         //</editor-fold>
 
         /* Create and display the form */
-<<<<<<< HEAD
-        java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));
-=======
+
         java.awt.EventQueue.invokeLater(() -> new Perfil().setVisible(true));
->>>>>>> d6da510eee19d726bd0ca5047389144aa695e96c
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu ListarPaciente;
     private javax.swing.JMenuItem cadastrarEspecialidade;
     private javax.swing.JMenuItem cadastrarMedico;
     private javax.swing.JMenu especialidadeMenu;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem listarEspecialidade;
     private javax.swing.JMenuItem listarMedico;
     private javax.swing.JMenu medicoMenu;
+    private javax.swing.JMenu perfilMenu;
     // End of variables declaration//GEN-END:variables
 }

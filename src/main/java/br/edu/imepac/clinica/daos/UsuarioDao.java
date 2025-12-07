@@ -190,6 +190,36 @@ public class UsuarioDao extends BaseDao implements Persistente<Usuario>  {
 
         return lista;
     }
+    
+    public Usuario autenticar(String usuario, String senha) throws SQLException {
+    String sql = "SELECT id, usuario, senha, cargo, status FROM usuarios " +
+                 "WHERE usuario = ? AND senha = ?";
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    try {
+        conn = getConnection();
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, usuario);
+        stmt.setString(2, senha);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            Usuario u = new Usuario();
+            u.setId(rs.getLong("id"));
+            u.setUsuario(rs.getString("usuario"));
+            u.setSenha(rs.getString("senha"));
+            u.setCargo(rs.getString("cargo"));
+            u.setStatus(rs.getString("status"));
+            return u;
+        }
+        return null;
+    } finally {
+        fecharRecursos(conn, stmt, rs);
+    }
+}
+
 
 }
     
